@@ -1,0 +1,6 @@
+add_executable(example_complex16 example.F matvec.F)
+add_executable(example_irl_complex16 example_irl.F matvec.F)
+add_executable(compare_complex16 compare.F)
+target_link_libraries(example_complex16 zpropack)
+target_link_libraries(example_irl_complex16 zpropack)
+target_link_libraries(compare_complex16 zpropack)

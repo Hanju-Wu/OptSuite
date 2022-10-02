@@ -1,0 +1,6 @@
+add_executable(example_single example.F matvec.F)
+add_executable(example_irl_single example_irl.F matvec.F)
+add_executable(compare_single compare.F)
+target_link_libraries(example_single spropack)
+target_link_libraries(example_irl_single spropack)
+target_link_libraries(compare_single spropack)

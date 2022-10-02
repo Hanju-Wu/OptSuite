@@ -1,0 +1,6 @@
+[submodule "deps/SRBio"]
+	path = deps/SRBio
+	url = ../srbio.git
+[submodule "deps/propack"]
+	path = deps/propack
+	url = ../propack.git

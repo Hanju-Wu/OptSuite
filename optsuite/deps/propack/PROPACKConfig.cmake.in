@@ -1,0 +1,9 @@
+@PACKAGE_INIT@
+
+include("${CMAKE_CURRENT_LIST_DIR}/propack-targets.cmake")
+
+add_library(PROPACK::PROPACK INTERFACE IMPORTED)
+set_target_properties(PROPACK::PROPACK PROPERTIES INTERFACE_LINK_LIBRARIES
+    "PROPACK::spropack;PROPACK::dpropack;PROPACK::cpropack;PROPACK::zpropack")
+
+check_required_components(PROPACK)

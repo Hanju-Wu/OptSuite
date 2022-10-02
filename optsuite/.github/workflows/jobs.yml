@@ -1,0 +1,70 @@
+name: optsuite
+on: [push, pull_request_target]
+jobs:
+    ubuntu_latest:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Fetch optsuite
+              uses: actions/checkout@v2
+              with:
+                  token: ${{ secrets.MY_REPO_PAT }}
+                  submodules: true
+            - name: Check commit
+              run: git log -1
+            - name: Install deps
+              run: |
+                  sudo apt update
+                  sudo apt install -y build-essential cmake gfortran libeigen3-dev libopenblas-dev liblapacke-dev libfftw3-dev libsuitesparse-dev libmetis-dev libarpack2-dev libbz2-dev zlib1g-dev
+            - name: Build
+              run: |
+                  mkdir build
+                  cd build
+                  cmake -DCMAKE_BUILD_TYPE=Release ..
+                  make -j
+            - name: Perform test
+              run: |
+                  cd build
+                  example/glasso
+    ubuntu_latest_mkl:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Fetch optsuite
+              uses: actions/checkout@v2
+              with:
+                  token: ${{ secrets.MY_REPO_PAT }}
+                  submodules: true
+            - name: Check commit
+              run: git log -1
+            - name: Install deps
+              run: |
+                  sudo apt update
+                  sudo apt install -y build-essential cmake gfortran libeigen3-dev libfftw3-dev libsuitesparse-dev libmetis-dev libarpack2-dev libbz2-dev zlib1g-dev
+            - name: Install MKL
+              run: |
+                  sudo apt install -y intel-mkl libmkl-dev
+            - name: Build
+              run: |
+                  mkdir build
+                  cd build
+                  cmake -DCMAKE_BUILD_TYPE=Release -DBLA_VENDOR=Intel10_64lp ..
+                  make -j
+            - name: Perform test
+              run: |
+                  cd build
+                  example/glasso
+    docker_centos7:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Fetch optsuite
+              uses: actions/checkout@v2
+              with:
+                  token: ${{ secrets.MY_REPO_PAT }}
+                  submodules: true
+            - name: Check commit
+              run: git log -1
+            - name: Update OS
+              run: sudo apt update
+            - name: Login to Docker Hub
+              run: sudo docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_TOKEN }}"
+            - name: Run job
+              run: ./scripts/docker_centos.sh :7

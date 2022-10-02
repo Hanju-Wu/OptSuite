@@ -1,0 +1,6 @@
+add_executable(example_double example.F matvec.F)
+add_executable(example_irl_double example_irl.F matvec.F)
+add_executable(compare_double compare.F)
+target_link_libraries(example_double dpropack)
+target_link_libraries(example_irl_double dpropack)
+target_link_libraries(compare_double dpropack)
