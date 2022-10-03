@@ -62,8 +62,9 @@ cmake --install build
 #### 获取 OptSuite 代码
 首先下载源码
 ```
-git clone --recursive https://github.com/RyanBernX/optsuite.git
+git clone --recursive https://github.com/Strong-Wuhj/OptSuite.git
 ```
+optsuite在OptSuite内
 
 #### Configure
 
